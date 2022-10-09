@@ -11,7 +11,7 @@ const port = 8000;
 app.get("/", (req, res) => {
   const strArgs = [2, 1, 1, 2, 1, 1090.83, 1, 1, "Palanpur,Surat"].join(" ");
   exec(
-    `python3 ./predict_price/process.py ${strArgs}`,
+    `python3 ./price_predict/process.py ${strArgs}`,
     (error, stdout, _stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);

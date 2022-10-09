@@ -12,7 +12,7 @@ from sklearn.tree import DecisionTreeRegressor
 # Pré-processamento dos dados 
 ###
 
-df = pd.read_csv('train.csv')
+df = pd.read_csv('./price_predict/train.csv')
 rename = {
     'TARGET(PRICE_IN_LACS)':'TARGET',
 }
