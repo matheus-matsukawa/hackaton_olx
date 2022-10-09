@@ -42,7 +42,7 @@ app.post("/", (req, res) => {
         console.error(`exec error: ${error}`);
         return;
       }
-      res.send(stdout);
+      res.json({ prediction: stdout });
     },
   );
 });

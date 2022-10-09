@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { allAddresses } from "./static/addresses";
 import { axiosPOST } from "./services/apiService";
 
@@ -17,7 +17,7 @@ const Form = () => {
   const [prediction, setPrediction] = useState(0);
 
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const data = {
@@ -29,12 +29,15 @@ const Form = () => {
       resale: resale,
       address: address
     }
-    console.log(data)
 
-    const newPrediction = axiosPOST("http://localhost:8000/", data)
-    setPrediction(newPrediction)
+    const req = await axiosPOST("http://localhost:8000/", data)
+    setPrediction(req.prediction)
   }
 
+  useEffect(() => {
+    console.log(`prediction ${prediction}`)
+    document.getElementById("prediction").innerHTML = prediction
+  },[prediction])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -103,12 +106,12 @@ const Form = () => {
       <input className="submit-btn" type="submit" value="Calcular"/>
 
       <h4>Previsão de valor:</h4>
-      <div>{prediction}</div>
+      <div id="prediction">{prediction}</div>
     </form>
   );
 };
 
-function App(props) {
+function App() {
   return (
     <div className="App">
       <header className="App-header">
