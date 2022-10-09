@@ -1,7 +1,9 @@
 FROM nikolaik/python-nodejs:latest
-RUN cd ~
-RUN python3 -m venv vm_olx
-RUN cd ./price_predict
-RUN . ./vm_olx/bin/activate
-RUN cd ..
-RUN node ./web/index.js
+COPY . /app
+WORKDIR /app
+RUN cd web && \
+  npm install && \
+  cd ../price_predict && \
+  pip install -r requirements.txt && \
+  cd ..
+CMD ["node", "./web/index.js"]
