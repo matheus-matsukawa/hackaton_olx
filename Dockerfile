@@ -1,7 +1,9 @@
 FROM nikolaik/python-nodejs:latest
-COPY . /app
 WORKDIR /app
-RUN cd web && \
+COPY . /app
+RUN apt update && \
+  pip install --upgrade pip && \
+  cd web && \
   npm install && \
   cd ../price_predict && \
   pip install -r requirements.txt && \

@@ -29,13 +29,8 @@ app.post("/", (req, res) => {
     area,
     readyToMove,
     resale,
-    address,
-  ].join(" ");
-  console.log(`
-  
-  ${strArgs}
-  
-  `);
+  ].join(" ") + ` "${address}"`;
+
   exec(
     `python3 ./price_predict/process.py ${strArgs}`,
     (error, stdout, _stderr) => {

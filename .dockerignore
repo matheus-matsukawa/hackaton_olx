@@ -1,4 +1,5 @@
-node_modules
+web/node_modules
 temp/*
-vm_olx
+price_predict/vm_olx/*
 *.ipynb
+front/*
