@@ -2,3 +2,4 @@ node_modules
 temp/*
 vm_olx
 *.ipynb
+front
