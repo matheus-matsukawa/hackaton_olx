@@ -60,7 +60,7 @@ const Form = () => {
       <label>
         <h2>Possui escritura?</h2>
       </label>
-      <select onChange={(e) => e.targer.value && setHasRegistring(parseInt(e.target.value))}>
+      <select onChange={(e) => e.target.value && setHasRegistring(parseInt(e.target.value))}>
         <option value="1">Sim</option>
         <option value="0">Não</option>
       </select>
