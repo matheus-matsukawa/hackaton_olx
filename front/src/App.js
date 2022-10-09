@@ -1,64 +1,118 @@
-import logo from './logo.svg';
-import './App.css';
-import { useForm, useController } from "react-hook-form";
-import { connect } from "react-redux"
-import {updateAction} from './actions/updateAction';
+import logo from "./logo.svg";
+import "./App.css";
+import { useState } from "react";
+import { allAddresses } from "./static/addresses";
+import { axiosPOST } from "./services/apiService";
 
-const Form = ({ count=0, rooms=0, bathrooms=0, parkingSpaces=0, condoFee=0, taxes=0, sqrMeters=0 }) => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+const Form = () => {
+  const [postAuthor, setPostAuthor] = useState(1);
+  const [rooms, setRooms] = useState(1);
+  const [hasRegistering, setHasRegistring] = useState(0);
 
-  const onSubmit = data => count++
-  console.log(watch("count"));
-   
+  const [address, setAddress] = useState('');
+  const [readyToMove, setReadyToMove] = useState(0);
+  const [area, setArea] = useState(0);
+  const [resale, setResale] = useState(0)
+
+  const [prediction, setPrediction] = useState(0);
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const data = {
+      postedBy: postAuthor,
+      hasRegistering: hasRegistering,
+      rooms: rooms,
+      area: area,
+      readyToMove: readyToMove,
+      resale: resale,
+      address: address
+    }
+    console.log(data)
+
+    const newPrediction = axiosPOST("http://localhost:8000/", data)
+    setPrediction(newPrediction)
+  }
+
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label><h2>Número de Quartos</h2></label>
-      <select {...register("rooms")}>
-        <option value={ rooms } disabled selected hidden>{ rooms }</option>
-        <option value="1">1</option>
+    <form onSubmit={handleSubmit}>
+      <label>
+        <h2>Postado por:</h2>
+      </label>
+      <select onChange={(e) => setPostAuthor(parseInt(e.target.value))}>
+        <option value="1" selected>Dono</option>
+        <option value="2">Imobiliária</option>
+        <option value="3">Construtor</option>
+      </select>
+
+      <label>
+        <h2>Número de quartos</h2>
+      </label>
+      <select onChange={(e) => setRooms(parseInt(e.target.value))}>
+        <option value="1" selected>1</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4+</option>
       </select>
-      <label><h2>Número de Banheiros</h2></label>
-      <select {...register("bathrooms")}>
-        <option value="" disabled selected hidden>Selecione</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4+</option>
+
+      <label>
+        <h2>Possui escritura?</h2>
+      </label>
+      <select onChange={(e) => e.targer.value && setHasRegistring(parseInt(e.target.value))}>
+        <option value="1">Sim</option>
+        <option value="0">Não</option>
       </select>
-      <label><h2>Vagas na garagem</h2></label>
-      <select {...register("parkingSpaces")}>
-        <option value="" disabled selected hidden>Selecione</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4+</option>
+
+      <label>
+        <h2>Endereço</h2>
+      </label>
+      <select onChange={(e) => setAddress(e.target.value)}>
+        <option value="Endereço" disabled selected>Selecione</option>
+        {
+          allAddresses.map((address, index) => <option key={index} value={address}>{address}</option>)
+        }
       </select>
-      <label><h2>Condomínio (R$)</h2></label>
-      <input {...register("condoFee")} />
-      <label><h2>ITPU (R$)</h2></label>
-      <input {...register("taxes")} />
-      <label><h2>Área (m²)</h2></label>
-      <input {...register("sqrMeters")} />
-      {/* <input {...register("exampleRequired", { required: true })} />
-      {errors.exampleRequired && <span>This field is required</span>} */}
+
+      <label>
+        <h2>Área (m²)</h2>
+      </label>
+      <input 
+        value={area}
+        type="number" 
+        onChange={e => setArea(e.target.value)}
+      />
+
+      <label>
+        <h2>Pronta entrega:</h2>
+      </label>
+      <select onChange={(e) => setReadyToMove(parseInt(e.target.value))}>
+        <option value="1" selected>Sim</option>
+        <option value="2">Não</option>
+      </select>
       
-      <input className="submit-btn" type="submit" value="Calcular" />
+      <label>
+        <h2>Único dono:</h2>
+      </label>
+      <select onChange={(e) => setResale(parseInt(e.target.value))}>
+        <option value="0" selected>Sim</option>
+        <option value="1">Não</option>
+      </select>
+      
+      <input className="submit-btn" type="submit" value="Calcular"/>
+
       <h4>Previsão de valor:</h4>
-      <input {...register("count")} value={ count} disabled/>
+      <div>{prediction}</div>
     </form>
   );
-}
+};
 
 function App(props) {
-
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        
       </header>
 
       <div className="App-body">
@@ -67,14 +121,8 @@ function App(props) {
           <Form className="Form" />
         </div>
       </div>
-
-      
-      
-
     </div>
   );
 }
-
-connect(({ count, rooms, bathrooms, parkingSpaces, condoFee, taxes, sqrMeters }) => ({ count, rooms, bathrooms, parkingSpaces, condoFee, taxes, sqrMeters }), updateAction)(Form)
 
 export default App;

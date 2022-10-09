@@ -1,15 +1,41 @@
 const express = require("express");
 const app = express();
 const { exec } = require("child_process");
-
-app.set("views", "web/views");
-app.set("view engine", "ejs");
-app.use(express.static("assets"));
+const bodyParser = require("body-parser");
+const cors = require("cors");
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const port = 8000;
 
-app.get("/", (req, res) => {
-  const strArgs = [2, 1, 1, 2, 1, 1090.83, 1, 1, "Palanpur,Surat"].join(" ");
+app.post("/", (req, res) => {
+  const {
+    postedBy,
+    hasRegistering,
+    rooms,
+    area,
+    readyToMove,
+    resale,
+    address,
+  } = req.body;
+
+  const strArgs = [
+    postedBy,
+    0,
+    hasRegistering,
+    rooms,
+    1,
+    area,
+    readyToMove,
+    resale,
+    address,
+  ].join(" ");
+  console.log(`
+  
+  ${strArgs}
+  
+  `);
   exec(
     `python3 ./price_predict/process.py ${strArgs}`,
     (error, stdout, _stderr) => {
