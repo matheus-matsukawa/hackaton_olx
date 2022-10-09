@@ -1,30 +1,23 @@
 const express = require("express");
 const app = express();
-const fs = require("fs");
 const { exec } = require("child_process");
 
 app.set("views", "web/views");
 app.set("view engine", "ejs");
 app.use(express.static("assets"));
 
-if (!fs.existsSync("temp")) {
-  fs.mkdirSync("temp");
-}
-
-const port = 3000;
+const port = 8000;
 
 app.get("/", (req, res) => {
+  const strArgs = [2, 1, 1, 2, 1, 1090.83, 1, 1, "Palanpur,Surat"].join(" ");
   exec(
-    "deno run -A externalAppTest.ts",
-    (error, _stdout, _stderr) => {
+    `python3 ./predict_price/process.py ${strArgs}`,
+    (error, stdout, _stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
         return;
       }
-      const rawData = fs.readFileSync("./temp/test.json");
-      const user = JSON.parse(rawData);
-      fs.unlinkSync("./temp/test.json");
-      res.render("index", { name: user.name, city: user.city });
+      res.send(stdout);
     },
   );
 });
