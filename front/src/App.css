@@ -1,0 +1,61 @@
+.App {
+  text-align: center;
+  background-color: #6E0AD6;
+  min-height: 100vh;
+  display: flex;
+  /* justify-content: center; */
+  /*flex-direction: column;
+  align-items: center;
+  justify-content: center; #6E0AD6*/
+  font-size: calc(10px + 2vmin);
+  z-index: 0;
+}
+
+.App-body {
+  margin-top: 12vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.App-header {
+  position: fixed;
+  height: 10vh;
+  background-color: #FFFFFF;
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+  padding-right: 500px;
+}
+
+.App-logo {
+  width: 48px;
+  height: 48px;
+}
+
+
+.Form-div {
+  font-size: 12px;
+  background-color: #FFFFFF;
+  min-height: 80vh;
+  max-width: 80%;
+  min-width: 40%;
+  border-radius: 5%;
+  justify-self: center;
+  display: block;
+  padding: 5px 5px;
+}
+
+.Form {
+  position: relative;
+  top: 10%;
+  display: block;
+  justify-self: start;
+}
+
+.submit-btn {
+  display: block;
+  margin: 5px auto;
+}
