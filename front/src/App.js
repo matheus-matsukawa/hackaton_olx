@@ -30,8 +30,10 @@ const Form = () => {
       address: address
     }
 
-    const req = await axiosPOST("http://www.hackaton-olx-prod-hackaton-olx-m6tiu4.mo2.mogenius.io", data)
-    setPrediction(req.prediction)
+    const req = await fetch("http://www.hackaton-olx-prod-hackaton-olx-m6tiu4.mo2.mogenius.io",
+      { body: JSON.stringify(data), method: "POST" })
+    const body = await req.json()
+    setPrediction(body.prediction)
   }
 
   useEffect(() => {
