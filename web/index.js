@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const { exec } = require("child_process");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cors());
 const port = 8000;
 
 app.options("/*", (req, res) => {
@@ -23,6 +24,7 @@ app.options("/*", (req, res) => {
   res.append("Content-Length", 0);
   res.status(204).send();
 });
+
 app.post("/", (req, res) => {
   const {
     postedBy,
