@@ -4,10 +4,7 @@ const { exec } = require("child_process");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-app.use(cors({
-  origin: "*",
-  methods: ["GET"],
-}));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -42,6 +39,14 @@ app.post("/", (req, res) => {
         console.error(`exec error: ${error}`);
         return;
       }
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Headers", "Authorization");
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+      );
+      res.setHeader("Content-Type", "application/json;charset=UTF-8");
+
       res.json({ prediction: stdout });
     },
   );
