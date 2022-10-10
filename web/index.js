@@ -8,6 +8,21 @@ app.use(bodyParser.json());
 
 const port = 8000;
 
+app.options("/*", (req, res) => {
+  res.append("Access-Control-Allow-Origin", "*");
+  res.append(
+    "Access-Control-Allow-Headers",
+    "DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type",
+  );
+  res.append(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+  );
+  res.append("Content-Type", "application/json");
+  res.append("Access-Control-Max-Age", 1728000);
+  res.append("Content-Length", 0);
+  res.status(204).send();
+});
 app.post("/", (req, res) => {
   const {
     postedBy,
