@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const connection = axios.create({
-  baseURL: "http://hackaton-olx-prod-hackaton-olx-m6tiu4.mo2.mogenius.io:80/",
+  baseURL:
+    "http://www.hackaton-olx-prod-hackaton-olx-m6tiu4.mo2.mogenius.io:80/",
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Authorization",

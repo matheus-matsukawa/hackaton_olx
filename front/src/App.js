@@ -30,7 +30,7 @@ const Form = () => {
       address: address
     }
 
-    const req = await axiosPOST("http://hackaton-olx-prod-hackaton-olx-m6tiu4.mo2.mogenius.io:80/", data)
+    const req = await axiosPOST("http://www.hackaton-olx-prod-hackaton-olx-m6tiu4.mo2.mogenius.io:80/", data)
     setPrediction(req.prediction)
   }
 

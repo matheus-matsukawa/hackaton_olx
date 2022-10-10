@@ -9,4 +9,5 @@ RUN apt update && \
   . ./vm-olx/bin/activate && \
   pip install -r /app/price_predict/requirements.txt && \
   cd ..
+EXPOSE 8000
 CMD ["node", "./web/index.js"]
