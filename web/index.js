@@ -38,12 +38,12 @@ app.post("/", (req, res) => {
         return;
       }
       res.append("Access-Control-Allow-Origin", "*");
-      res.append("Access-Control-Allow-Headers", "Authorization");
+      res.append("Access-Control-Allow-Headers", "*");
       res.append(
         "Access-Control-Allow-Methods",
         "GET, POST, OPTIONS, PUT, PATCH, DELETE",
       );
-      res.append("Content-Type", "application/json;charset=UTF-8");
+      res.append("Content-Type", "application/json");
 
       res.json({ prediction: stdout });
     },

@@ -31,7 +31,7 @@ const Form = () => {
     }
 
     const req = await fetch("http://www.hackaton-olx-prod-hackaton-olx-m6tiu4.mo2.mogenius.io",
-      { body: JSON.stringify(data), method: "POST" })
+      { body: JSON.stringify(data), method: "POST", headers:{'content-type': 'application/json'} })
     const body = await req.json()
     setPrediction(body.prediction)
   }
