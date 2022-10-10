@@ -39,13 +39,13 @@ app.post("/", (req, res) => {
         console.error(`exec error: ${error}`);
         return;
       }
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Headers", "Authorization");
-      res.setHeader(
+      res.append("Access-Control-Allow-Origin", "*");
+      res.append("Access-Control-Allow-Headers", "Authorization");
+      res.append(
         "Access-Control-Allow-Methods",
         "GET, POST, OPTIONS, PUT, PATCH, DELETE",
       );
-      res.setHeader("Content-Type", "application/json;charset=UTF-8");
+      res.append("Content-Type", "application/json;charset=UTF-8");
 
       res.json({ prediction: stdout });
     },
